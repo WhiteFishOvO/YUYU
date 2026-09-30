@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -31,18 +31,13 @@ jobs:
         working-directory: src
         run: npm install
 
-      - name: Build
+      # 只编译 exe，跳过 NSIS 安装包打包（其 nsis_tauri_utils 版本过旧会报 Plug not found）。
+      - name: Build exe
         working-directory: src
-        run: npm run build
-
-      - name: Upload installer
-        uses: actions/upload-artifact@v4
-        with:
-          name: DS-Desktop-Whale-QQ-Installer
-          path: src/src-tauri/target/release/bundle/nsis/*.exe
+        run: npm run build -- --no-bundle
 
       - name: Upload portable exe
         uses: actions/upload-artifact@v4
         with:
-          name: DS-Desktop-Whale-QQ-Portable
+          name: DS-Desktop-Whale-QQ-exe
           path: src/src-tauri/target/release/DS Desktop Whale.exe
