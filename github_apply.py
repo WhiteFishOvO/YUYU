@@ -26,7 +26,7 @@ use std::path::PathBuf;
 use std::thread;
 use std::time::Duration;
 
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Emitter};
 
 /// QQ Agent 私聊消息记录文件（可用环境变量 `QQ_AGENT_MSG_FILE` 覆盖）。
 const DEFAULT_MESSAGE_FILE: &str =
